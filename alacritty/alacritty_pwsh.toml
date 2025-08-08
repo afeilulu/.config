@@ -1,0 +1,13 @@
+[general]
+import = [
+  # import common config
+  ".\\common.toml",
+  ".\\keybindings.toml",
+  # import themes
+  ".\\themes\\mojave-dark-by-themer-dot-dev.toml"
+]
+
+[terminal]
+
+[terminal.shell]
+program = 'pwsh.exe'
