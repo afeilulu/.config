@@ -36,3 +36,8 @@ require("lazy").setup({
 
 -- Set lualine
 require('lualine').setup()
+
+
+-- Set bufferline
+vim.opt.termguicolors = true
+require("bufferline").setup()

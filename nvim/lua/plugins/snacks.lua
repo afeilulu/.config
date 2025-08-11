@@ -1,10 +1,4 @@
 return {
-{ "folke/which-key.nvim", lazy = true },
-{
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' }
-},
-{
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
@@ -37,7 +31,18 @@ return {
       },
       refresh = 50, -- refresh at most every 50ms
     },
-    words = { enabled = true },
+    words = { 
+	enabled = true,
+	debounce = 200, -- time in ms to wait before updating
+  	notify_jump = false, -- show a notification when jumping
+  	notify_end = true, -- show a notification when reaching the end
+  	foldopen = true, -- open folds after jumping
+  	jumplist = true, -- set jump point before jumping
+  	modes = { "n", "i", "c" }, -- modes to show references
+  	filter = function(buf) -- what buffers to enable `snacks.words`
+    		return vim.g.snacks_words ~= false and vim.b[buf].snacks_words ~= false
+  	end,
+    },
     styles = {
       notification = {
         -- wo = { wrap = true } -- Wrap notifications
@@ -103,6 +108,7 @@ return {
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
+    { "<leader>db", function() Snacks.dashboard() end, desc = "Open Dashboard" },
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
@@ -164,5 +170,4 @@ return {
       end,
     })
   end,
-}
 }
