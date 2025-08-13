@@ -1,4 +1,5 @@
-require("config.lazy")
+require("core.lazy")
+require("config.autocmds")
 
 local map = vim.keymap.set
 vim.g.mapleader = " "
