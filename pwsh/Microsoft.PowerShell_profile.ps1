@@ -1,6 +1,9 @@
 # Foreground.BrightCyan + Bold . This is a bug fix.
 $PSStyle.FileInfo.Directory = "`e[96;1m"
 
+# show command history as ListView, default is InlineView
+Set-PSReadLineOption -PredictionViewStyle ListView
+
 # Firstly install by Install-Module -Name Terminal-Icons -Repository PSGallery
 # https://github.com/devblackops/Terminal-Icons?WT.mc_id=-blog-scottha
 Import-Module -Name Terminal-Icons
