@@ -33,11 +33,3 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
-
--- Set lualine
-require('lualine').setup()
-
-
--- Set bufferline
-vim.opt.termguicolors = true
-require("bufferline").setup()
