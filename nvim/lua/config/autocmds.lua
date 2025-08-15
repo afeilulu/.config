@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 
     if not vim.g.ui_entered and args.event == "UIEnter" then
       vim.g.ui_entered = true
+      vim.cmd("ShowkeysToggle")
     end
 
     if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
@@ -43,3 +44,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank()
   end,
 })
+
