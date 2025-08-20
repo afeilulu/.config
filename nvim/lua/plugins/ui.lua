@@ -2,7 +2,7 @@ return {
   {
     "sainnhe/gruvbox-material",
     enabled = true,
-    lazy = false,
+    lazy = true,
     priority = 1000,
     opts = function()
       vim.g.gruvbox_material_transparent_background = 1
@@ -22,9 +22,9 @@ return {
 
   {
     "akinsho/bufferline.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
+    dependencies = { "nvim-tree/nvim-web-devicons","sainnhe/gruvbox-material" },
     event = "VeryLazy",
-    init = function()
+    opts = function()
       require("bufferline").setup({
         options = {
           numbers = "ordinal",
