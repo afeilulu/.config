@@ -25,6 +25,7 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.signcolumn = "yes"
 vim.opt.winborder = "rounded"
+vim.opt.shell = "pwsh"
 
 -- Copy/Paste when using ssh on a remote server
 if vim.env.SSH_CONNECTION and pcall(require, "vim.ui.clipboard.osc52") then

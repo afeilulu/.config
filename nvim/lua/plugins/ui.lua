@@ -10,10 +10,9 @@ return {
       vim.g.gruvbox_material_background = "hard"
       vim.g.gruvbox_material_ui_contrast = "high"
       vim.g.gruvbox_material_float_style = "bright"
-      vim.g.gruvbox_material_statusline_style = "material" -- Options: "original", "material", "mix", "afterglow"
+      vim.g.gruvbox_material_statusline_style = "mix" -- Options: "original", "material", "mix", "afterglow"
       vim.g.gruvbox_material_cursor = "auto"
-
-      -- vim.g.gruvbox_material_colors_override = { bg0 = '#16181A' } -- #0e1010
+      vim.g.gruvbox_material_transparent_background = "2"
       vim.g.gruvbox_material_better_performance = 1
 
       vim.cmd.colorscheme("gruvbox-material")
@@ -47,22 +46,11 @@ return {
   },
 
   {
-    "tiagovla/scope.nvim",
-    init = function()
-      require("scope").setup({})
-    end,
-    keys = {
-      { "<M-n>", "<CMD>tabnext<CR>" },
-      { "<M-p>", "<CMD>tabprevious<CR>" },
-    },
-  },
-
-  {
 	  'nvim-lualine/lualine.nvim',
-	  dependencies = { 'nvim-tree/nvim-web-devicons' },
+	  dependencies = { "nvim-tree/nvim-web-devicons","sainnhe/gruvbox-material" },
     event = "VeryLazy",
     opts = {
-      theme = 'gruvbox-material',
+      theme = 'gruvbox_material',
       globalstatus = true,
     }
   },
