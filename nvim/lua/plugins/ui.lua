@@ -21,39 +21,16 @@ return {
   },
 
   {
-    "akinsho/bufferline.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons","sainnhe/gruvbox-material" },
-    event = "VeryLazy",
-    opts = function()
-      require("bufferline").setup({
-        options = {
-          numbers = "ordinal",
-        },
-      })
-    end,
-    keys = {
-      { "<leader>1", "<CMD>BufferLineGoToBuffer 1<CR>" },
-      { "<leader>2", "<CMD>BufferLineGoToBuffer 2<CR>" },
-      { "<leader>3", "<CMD>BufferLineGoToBuffer 3<CR>" },
-      { "<leader>4", "<CMD>BufferLineGoToBuffer 4<CR>" },
-      { "<leader>5", "<CMD>BufferLineGoToBuffer 5<CR>" },
-      { "<leader>6", "<CMD>BufferLineGoToBuffer 6<CR>" },
-      { "<leader>7", "<CMD>BufferLineGoToBuffer 7<CR>" },
-      { "<leader>8", "<CMD>BufferLineGoToBuffer 8<CR>" },
-      { "<leader>9", "<CMD>BufferLineGoToBuffer 9<CR>" },
-      { "<leader>d", "<CMD>bdelete<CR>" },
-    },
-  },
-
-  {
 	  'nvim-lualine/lualine.nvim',
 	  dependencies = { "nvim-tree/nvim-web-devicons","sainnhe/gruvbox-material" },
+    lazy = true,
     event = "VeryLazy",
     opts = {
       theme = 'gruvbox_material',
-      globalstatus = true,
+      globalstatus = false,
     }
   },
 
-  { "nvzone/showkeys",cmd = "ShowkeysToggle" }
+  { "nvzone/showkeys",cmd = "ShowkeysToggle" },
+
 }
