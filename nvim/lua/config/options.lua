@@ -11,13 +11,13 @@ vim.opt.writebackup = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.fileencoding = "utf-8"
 vim.opt.smartindent = true
+vim.opt.expandtab = false
 vim.opt.autoindent = true
 vim.opt.tabstop = 2
-vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
-vim.opt.cursorline = true
-vim.opt.number = true
+vim.opt.wrap = false
 vim.opt.relativenumber = true
+vim.opt.number = true
 vim.opt.completeopt = "menuone,noselect"
 vim.opt.pumheight = 20
 vim.opt.foldmethod = "expr"
@@ -26,6 +26,10 @@ vim.opt.foldlevel = 99
 vim.opt.signcolumn = "yes"
 vim.opt.winborder = "rounded"
 vim.opt.shell = "pwsh"
+
+vim.opt.mouse:append("a")
+
+vim.opt.cursorline = false
 
 -- Copy/Paste when using ssh on a remote server
 if vim.env.SSH_CONNECTION and pcall(require, "vim.ui.clipboard.osc52") then

@@ -144,12 +144,6 @@ return {
   },
 
   {
-    "catgoose/nvim-colorizer.lua",
-    event = "User FilePost",
-    opts = {},
-  },
-
-  {
     "kevinhwang91/nvim-hlslens",
     opts = {
       nearest_only = true,
@@ -164,22 +158,4 @@ return {
     },
   },
   
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-    ft = "markdown",
-    opts = {},
-  },
-
-  {
-	  "mg979/vim-visual-multi",
-  	branch = "master",
-  	init = function()
-      vim.g.VM_default_mappings = 0
-  		vim.g.VM_maps = {
-        ["Find Under"] = ""
-      }
-      vim.g.VM_add_cursor_at_pos_no_mappings = 1
-  	end,
-  }
 }
