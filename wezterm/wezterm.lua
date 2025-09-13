@@ -1,88 +1,72 @@
--- These are the basic's for using wezterm.
--- Mux is the mutliplexes for windows etc inside of the terminal
--- Action is to perform actions on the terminal
-local wezterm = require 'wezterm'
-local mux = wezterm.mux
-local act = wezterm.action
+local wezterm = require("wezterm")
+local keys = require("keys")
+local fonts = require("fonts")
+local decoration = require("decoration")
+local haswork, work = pcall(require, "work")
 
--- These are vars to put things in later (i dont use em all yet)
-local config = {}
-local keys = {}
-local mouse_bindings = {}
+local config = wezterm.config_builder()
 local launch_menu = {}
 
--- This is for newer wezterm vertions to use the config builder 
-if wezterm.config_builder then
-  config = wezterm.config_builder()
+local is_windows_11 = false
+
+--- Setup PowerShell options
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	--- Grab the ver info for later use.
+	-- local _, stdout, _ = wezterm.run_child_process({ "cmd.exe", "ver" })
+	-- local _, _, build, _ = stdout:match("Version ([0-9]+)%.([0-9]+)%.([0-9]+)%.([0-9]+)")
+	-- is_windows_11 = tonumber(build) >= 22000
+	is_windows_11 = true
+
+	--- Make it look cool.
+	if is_windows_11 then
+		wezterm.log_info("We're running Windows 11!")
+	end
+
+	--- Set Pwsh as the default on Windows
+	config.default_prog = { "pwsh.exe", "-NoLogo" }
+	table.insert(launch_menu, {
+		label = "Pwsh",
+		args = { "pwsh.exe", "-NoLogo" },
+	})
+	table.insert(launch_menu, {
+		label = "PowerShell",
+		args = { "powershell.exe", "-NoLogo" },
+	})
+	table.insert(launch_menu, {
+		label = "Pwsh No Profile",
+		args = { "pwsh.exe", "-NoLogo", "-NoProfile" },
+	})
+	table.insert(launch_menu, {
+		label = "PowerShell No Profile",
+		args = { "powershell.exe", "-NoLogo", "-NoProfile" },
+	})
+else
+	--- Non-Windows Machine
+	table.insert(launch_menu, {
+		label = "Pwsh",
+		args = { "/usr/local/bin/pwsh", "-NoLogo" },
+	})
+	table.insert(launch_menu, {
+		label = "Pwsh No Profile",
+		args = { "/usr/local/bin/pwsh", "-NoLogo", "-NoProfile" },
+	})
 end
 
---- Set Pwsh as the default on Windows
-config.default_prog = { 'pwsh.exe', '-NoLogo' }
-
-table.insert(launch_menu, {
-  label = 'Pwsh',
-  args = { 'pwsh.exe', '-NoLogo' },
-})
-
--- Default config settings
--- These are the default config settins needed to use Wezterm
--- Just add this and return config and that's all the basics you need
-
--- Color scheme, Wezterm has 100s of them you can see here:
--- https://wezfurlong.org/wezterm/colorschemes/index.html
-config.color_scheme = 'Oceanic Next (Gogh)'
--- This is my chosen font, we will get into installing fonts on windows later
-config.font = wezterm.font('JetBrainsMono Nerd Font')
-config.font_size = 11
+--- Default config settings
+config.scrollback_lines = 7000
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.launch_menu = launch_menu
--- makes my cursor blink 
-config.default_cursor_style = 'BlinkingBar'
-config.disable_default_key_bindings = true
--- this adds the ability to use ctrl+v to paste the system clipboard 
-config.keys = {{ key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },}
-config.mouse_bindings = mouse_bindings
+-- Allow overwriting for work stuff
+if haswork then
+	work.apply_to_config(config)
+end
 
--- There are mouse binding to mimc Windows Terminal and let you copy
--- To copy just highlight something and right click. Simple
-mouse_bindings = {
-  {
-    event = { Down = { streak = 3, button = 'Left' } },
-    action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
-    mods = 'NONE',
-  },
- {
-  event = { Down = { streak = 1, button = "Right" } },
-  mods = "NONE",
-  action = wezterm.action_callback(function(window, pane)
-   local has_selection = window:get_selection_text_for_pane(pane) ~= ""
-   if has_selection then
-    window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
-    window:perform_action(act.ClearSelection, pane)
-   else
-    window:perform_action(act({ PasteFrom = "Clipboard" }), pane)
-   end
-  end),
- },
-}
+fonts.setup(config)
+keys.setup(config)
+decoration.setup(config, is_windows_11)
 
--- This is used to make my foreground (text, etc) brighter than my background
-config.foreground_text_hsb = {
-  hue = 1.0,
-  saturation = 1.2,
-  brightness = 1.5,
-}
-
--- This is used to set an image as my background 
--- config.background = {
---     {
---         source = { File = {path = 'C:/Users/someuserboi/Pictures/Backgrounds/theone.gif', speed = 0.2}},
---  opacity = 1,
---  width = "100%",
---  hsb = {brightness = 0.5},
---     }
--- }
-
--- IMPORTANT: Sets WSL2 UBUNTU-22.04 as the defualt when opening Wezterm
--- config.default_domain = 'WSL:Ubuntu-22.04'
+wezterm.on("user-var-changed", function(window, pane, name, value)
+	wezterm.log_info("var", name, value)
+end)
 
 return config
