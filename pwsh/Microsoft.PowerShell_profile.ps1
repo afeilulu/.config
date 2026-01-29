@@ -20,4 +20,4 @@ Set-Alias -Name vi -Value E:\App\nvim-win64\bin\nvim.exe
 
 # Claude Code
 $env:ENABLE_LSP_TOOLS = "1"
-$env:CLAUDE_CODE_EDITOR="code"
+$env:EDITOR="code --wait"
