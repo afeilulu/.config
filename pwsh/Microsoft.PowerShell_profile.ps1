@@ -2,7 +2,13 @@
 # $PSStyle.FileInfo.Directory = "`e[96;1m"
 
 # show command history as ListView, default is InlineView
-Set-PSReadLineOption -PredictionViewStyle ListView
+if (Get-Module -Name PSReadLine -ListAvailable) {
+    try {
+        Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction SilentlyContinue
+    } catch {
+        # Ignore errors in non-interactive environments
+    }
+}
 
 # Firstly install by Install-Module -Name Terminal-Icons -Repository PSGallery
 # https://github.com/devblackops/Terminal-Icons?WT.mc_id=-blog-scottha
@@ -21,3 +27,10 @@ Set-Alias -Name vi -Value E:\App\nvim-win64\bin\nvim.exe
 # Claude Code
 $env:ENABLE_LSP_TOOLS = "1"
 $env:EDITOR="code --wait"
+
+# Git Worktree Helper
+function worktree {
+    & "C:\Users\ChenGefei\.claude\scripts\worktree-helper.ps1" @Args
+}
+
+Set-Alias -Name wt -Value worktree -Force -Scope Global
